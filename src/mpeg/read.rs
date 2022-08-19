@@ -198,7 +198,9 @@ where
 					return Ok(Some((first_header, first_mp3_frame_start_absolute)))
 				},
 				HeaderCmpResult::Undetermined => return Ok(None),
-				HeaderCmpResult::NotEqual => {},
+				HeaderCmpResult::NotEqual => {
+					reader.seek(SeekFrom::Current(-3))?;
+				},
 			}
 		}
 
