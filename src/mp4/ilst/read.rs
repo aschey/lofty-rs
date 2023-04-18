@@ -128,12 +128,12 @@ where
 		// Most atoms we encounter are only going to have 1 value, so store them as such
 		if atom_data.len() == 1 {
 			let (flags, content) = atom_data.remove(0);
-			let data = interpret_atom_content(flags, content)?;
-
-			tag.atoms.push(Atom {
-				ident: atom_info.ident,
-				data: AtomDataStorage::Single(data),
-			});
+			if let Ok(data) = interpret_atom_content(flags, content) {
+				tag.atoms.push(Atom {
+					ident: atom_info.ident,
+					data: AtomDataStorage::Single(data),
+				});
+			}
 
 			return Ok(());
 		}
